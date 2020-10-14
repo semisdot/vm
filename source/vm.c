@@ -16,12 +16,19 @@ int main(int argc, char **argv) {
 	struct stack s;
 	uint8_t *(*ops[256])(uint8_t *, struct stack *); // instruction set // array of function pointers
 
-	if (argc != 2) {
+	if (argc == 1) {
+
+		code = load_stdin();
+
+	} else if (argc == 2) {
+
+		code = load_file(argv[1]);
+
+	} else {
 
 		usage();
 	}
 
-	code = load_file(argv[1]);
 	stack_init(&s, STACK_SIZE);
 	instruction_set_init(ops);
 
@@ -40,7 +47,7 @@ int main(int argc, char **argv) {
 
 void usage(void) {
 
-	fprintf(stderr, "\nERROR: usage: vm <filename>\n");
+	fprintf(stderr, "\nERROR: vm usage\n");
 
 	exit(1);
 }

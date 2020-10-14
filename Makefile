@@ -36,7 +36,10 @@ build: $(BUILD_DIR)/$(BUILD)
 
 .PHONY: run
 run: build
-	@$(BUILD_DIR)/$(BUILD) hello_world.vm
+# load from file
+#	@$(BUILD_DIR)/$(BUILD) hello_world.vm
+# load from STDIN
+	@$(BUILD_DIR)/$(BUILD) < hello_world.vm
 
 .PHONY: clean
 clean:

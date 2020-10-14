@@ -23,7 +23,7 @@ struct object stack_pop(struct stack *s) {
 	return s->o[--s->top];
 }
 
-struct object stack_peek(struct stack *s) {
+struct object stack_peek(struct stack *s) { // not used
 
 	check_stack_underflow(s);
 
