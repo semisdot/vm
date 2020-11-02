@@ -3,7 +3,7 @@
 
 #include "op.h"
 
-void instruction_set_fill(uint8_t *(*ops[256])(uint8_t *, struct stack *)) ;
+void instruction_set_fill(uint8_t *(**ops)(uint8_t *, struct stack *)) ;
 
 void stack_init(struct stack *s, size_t size) {
 
@@ -20,7 +20,7 @@ void stack_free(struct stack *s) {
 	free(s->o);
 }
 
-void instruction_set_init(uint8_t *(*ops[256])(uint8_t *, struct stack *)) {
+void instruction_set_init(uint8_t *(**ops)(uint8_t *, struct stack *)) {
 
 	instruction_set_fill(ops);
 
@@ -32,13 +32,12 @@ void instruction_set_init(uint8_t *(*ops[256])(uint8_t *, struct stack *)) {
 	ops['x'] = op_switch_top;
 }
 
-void instruction_set_fill(uint8_t *(*ops[256])(uint8_t *, struct stack *)) {
+void instruction_set_fill(uint8_t *(**ops)(uint8_t *, struct stack *)) {
 
 	int i;
 
 	for (i = 0; i < 256; ++i) {
 
-		// no operation
-		ops[i] = op_nop;
+		ops[i] = op_nop; // no operation
 	}
 }
