@@ -4,6 +4,8 @@
 
 #include "op_stack.h"
 
+void stack_error(char *err_msg);
+
 void check_stack_overflow(struct stack *s);
 void check_stack_underflow(struct stack *s);
 
@@ -30,14 +32,13 @@ struct object stack_peek(struct stack *s) { // not used
 	return s->o[s->top - 1];
 }
 
+///////////
+
 void check_stack_overflow(struct stack *s) {
 
 	if (!(s->top < s->size)) { // (s->top == s->size)
 
-		fflush(stdout);
-		fprintf(stderr, "\nERROR: stack overflow\n");
-
-		exit(1);
+		stack_error("stack overflow");
 	}
 }
 
@@ -45,9 +46,14 @@ void check_stack_underflow(struct stack *s) {
 
 	if (!s->top) {
 
-		fflush(stdout);
-		fprintf(stderr, "\nERROR: stack underflow\n");
-
-		exit(1);
+		stack_error("stack underflow");
 	}
+}
+
+void stack_error(char *err_msg) {
+
+	fflush(stdout);
+	fprintf(stderr, "\nERROR: %s\n", err_msg);
+
+	exit(1);
 }

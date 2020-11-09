@@ -7,7 +7,7 @@
 
 #define STACK_SIZE 1024
 
-void usage(void);
+void vm_error(char *err_msg);
 
 int main(int argc, char **argv) {
 
@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 
 	} else {
 
-		usage();
+		vm_error("vm usage");
 	}
 
 	stack_init(&s, STACK_SIZE);
@@ -45,9 +45,9 @@ int main(int argc, char **argv) {
 	return 0;
 }
 
-void usage(void) {
+void vm_error(char *err_msg) {
 
-	fprintf(stderr, "\nERROR: vm usage\n");
+	fprintf(stderr, "ERROR: %s\n", err_msg);
 
 	exit(1);
 }
