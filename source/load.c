@@ -9,33 +9,33 @@
 
 void load_error(char *err_msg, char *filename);
 
-void read_stdin(FILE *fp);
+void read_stdin(FILE *f);
 
 uint8_t *load_file(char *filename) {
 
-	FILE *fp;
+	FILE *f;
 	struct stat st;
 	uint8_t *code;
 
 	code = NULL;
 
-	fp = fopen(filename, "r");
+	f = fopen(filename, "r");
 
-	if (fp) {
+	if (f) {
 
-		fstat(fileno(fp), &st); // fileno() returns the file descriptor number // gets status information about the file specified by the open file descriptor and stores it
+		fstat(fileno(f), &st); // fileno() returns the file descriptor number // gets status information about the file specified by the open file descriptor and stores it
 
-		if (st.st_size) { // malloc(0)
+		if (st.st_size) { // malloc(0) // if ((st.st_size) == 0) return NULL
 
 			code = malloc(st.st_size); // allocate space for the array
-			fread(code, sizeof(*code), st.st_size, fp); // reads data from the stream into the array pointed to, by pointer
+			fread(code, sizeof(*code), st.st_size, f); // reads data from the stream into the array pointed to, by pointer
 		}
 
-		fclose(fp);
+		fclose(f);
 
 	} else {
 
-		load_error("cannot read file: ", filename);
+		load_error("cannot read file", filename);
 	}
 
 	return code;
@@ -44,38 +44,38 @@ uint8_t *load_file(char *filename) {
 // create a temp file, load stdin in it and use load_file()
 uint8_t *load_stdin(void) {
 
-	FILE *fp;
+	FILE *f;
 	char *filename;
 	uint8_t *code;
 
 	code = NULL;
 	filename = TEMP_FILE;
 
-	fp = fopen(filename, "w");
+	f = fopen(filename, "w");
 
-	if (fp) {
+	if (f) {
 
-		read_stdin(fp);
-		fclose(fp);
+		read_stdin(f);
+		fclose(f);
 
 		code = load_file(filename);
 		remove(filename);
 
 	} else {
 
-		load_error("cannot write file: ", filename);
+		load_error("cannot write file", filename);
 	}
 
 	return code;
 }
 
-void read_stdin(FILE *fp) {
+void read_stdin(FILE *f) {
 
 	int ch;
 
 	while ((ch = getchar()) != EOF) {
 
-		fprintf(fp, "%c", ch);
+		fputc(ch, f);
 	}
 
 	/*
@@ -90,7 +90,7 @@ void read_stdin(FILE *fp) {
 
 void load_error(char *err_msg, char *filename) {
 
-	fprintf(stderr, "ERROR: %s\"%s\"\n", err_msg, filename);
+	fprintf(stderr, "ERROR: %s: \"%s\"\n", err_msg, filename);
 
 	exit(1);
 }
