@@ -20,46 +20,44 @@ static void error_usage(const char *err_msg);
 
 int main(int argc, char **argv) {
 
+	uint8_t *code;
+
+	{ // handle command line
+		if (argc == 1) {
+
+			code = load_stdin();
+
+		} else if (argc == 2) {
+
+			code = load_file(argv[1]);
+
+		} else {
+
+			error_usage("vm usage");
+		}
+	}
+
 	{
-		uint8_t *code;
+		struct stack s;
+		uint8_t *(*ops[MAX_OPS])(uint8_t *, struct stack *); // array of function pointers
 
-		{ // handle command line
-			if (argc == 1) {
+		init_stack(&s, STACK_SIZE);
 
-				code = load_stdin();
+		set_ops(ops, MAX_OPS, op_nop);
+		init_ops(ops);
 
-			} else if (argc == 2) {
-
-				code = load_file(argv[1]);
-
-			} else {
-
-				error_usage("vm usage");
-			}
-		}
-
-		{
-			struct stack s;
-			uint8_t *(*ops[MAX_OPS])(uint8_t *, struct stack *); // array of function pointers
-
-			init_stack(&s, STACK_SIZE);
-
-			set_ops(ops, MAX_OPS, op_nop);
-			init_ops(ops);
-
-			vm_run(code, &s, ops);
-
-			/*
-			free(s.o);
-			s.o = NULL;
-			*/
-		}
+		vm_run(code, &s, ops);
 
 		/*
-		free(code);
-		code = NULL;
+		free(s.o);
+		s.o = NULL;
 		*/
 	}
+
+	/*
+	free(code);
+	code = NULL;
+	*/
 
 	return 0;
 }
