@@ -14,6 +14,8 @@ static uint8_t _op_sum_top(struct stack *s);
 
 uint8_t *op_nop(uint8_t *ip, struct stack *s) {
 
+	(void)s;
+
 	return ip + 1;
 }
 
@@ -45,6 +47,9 @@ uint8_t *op_emit(uint8_t *ip, struct stack *s) {
 }
 
 uint8_t *op_halt(uint8_t *ip, struct stack *s) {
+
+	(void)ip;
+	(void)s;
 
 	return NULL;
 }
@@ -118,5 +123,5 @@ static void put_ASCII_code(uint8_t u8) { // _op_emit_ASCII_code() ?!
 		u8 = u8 % 10; // == last digit // u8 = u8 - (u8 / 10) * 10
 	}
 
-	putchar(u8 + 48/*offset*/); // (u8 + '0')
+	putchar(u8 + 48 /* offset */); // (u8 + '0')
 }

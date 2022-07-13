@@ -15,9 +15,11 @@ void init_stack(struct stack *s, size_t size) {
 	s->o = malloc(sizeof(*s->o) * size);
 }
 
-void set_ops(uint8_t *(**ops)(uint8_t *, struct stack *), int ops_count, uint8_t *(*op)(uint8_t *, struct stack *)) {
-
-	int i;
+void set_ops(uint8_t *(**ops)(uint8_t *, struct stack *),
+			 const unsigned int ops_count,
+			 uint8_t *(*op)(uint8_t *, struct stack *))
+{
+	unsigned int i;
 
 	for (i = 0; i < ops_count; ++i) {
 
