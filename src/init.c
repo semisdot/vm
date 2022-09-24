@@ -1,3 +1,4 @@
+// #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -15,8 +16,14 @@ void init_stack(struct stack *s, size_t size) {
 	s->o = malloc(sizeof(*s->o) * size);
 }
 
+void free_stack(struct stack *s) {
+
+	free(s->o);
+	s->o = NULL;
+}
+
 void set_ops(uint8_t *(**ops)(uint8_t *, struct stack *),
-			 const unsigned int ops_count,
+			 unsigned int ops_count,
 			 uint8_t *(*op)(uint8_t *, struct stack *))
 {
 	unsigned int i;

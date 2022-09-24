@@ -48,10 +48,7 @@ int main(int argc, char **argv) {
 
 		vm_run(code, &s, ops);
 
-		/*
-		free(s.o);
-		s.o = NULL;
-		*/
+		// free_stack(&s);
 	}
 
 	/*
