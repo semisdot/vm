@@ -3,7 +3,7 @@ BUILD = vm
 CC = gcc
 
 CPPFLAGS = $(CPP_DIRS)
-# CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra
 # LDFLAGS = $(LD_DIRS)
 # LDLIBS = -l
 

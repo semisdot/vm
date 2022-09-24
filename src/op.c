@@ -3,6 +3,7 @@
 
 #include "op.h"
 
+#include "h.h"
 #include "stack.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -14,7 +15,7 @@ static uint8_t _op_sum_top(struct stack *s);
 
 uint8_t *op_nop(uint8_t *ip, struct stack *s) {
 
-	(void)s;
+	UNUSED_PARAMETER(s);
 
 	return ip + 1;
 }
@@ -48,8 +49,8 @@ uint8_t *op_emit(uint8_t *ip, struct stack *s) {
 
 uint8_t *op_halt(uint8_t *ip, struct stack *s) {
 
-	(void)ip;
-	(void)s;
+	UNUSED_PARAMETER(ip);
+	UNUSED_PARAMETER(s);
 
 	return NULL;
 }
