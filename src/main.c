@@ -18,8 +18,8 @@ static void error_usage(const char *err_msg);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-int main(int argc, char **argv) {
-
+int main(int argc, char **argv)
+{
 	uint8_t *code;
 
 	{ // handle command line
@@ -61,8 +61,8 @@ int main(int argc, char **argv) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void error_usage(const char *err_msg) {
-
+static void error_usage(const char *err_msg)
+{
 	fprintf(stderr, "Error: %s\n", err_msg);
 
 	exit(1);

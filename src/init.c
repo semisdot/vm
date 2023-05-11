@@ -8,16 +8,16 @@
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-void init_stack(struct stack *s, size_t size) {
-
+void init_stack(struct stack *s, size_t size)
+{
 	s->top = 0;
 	s->size = size;
 
 	s->o = malloc(sizeof(*s->o) * size);
 }
 
-void free_stack(struct stack *s) {
-
+void free_stack(struct stack *s)
+{
 	free(s->o);
 	s->o = NULL;
 }
@@ -34,8 +34,8 @@ void set_ops(uint8_t *(**ops)(uint8_t *, struct stack *),
 	}
 }
 
-void init_ops(uint8_t *(**ops)(uint8_t *, struct stack *)) {
-
+void init_ops(uint8_t *(**ops)(uint8_t *, struct stack *))
+{
 	ops['c'] = op_push_char;
 	ops['e'] = op_emit;
 	ops['h'] = op_halt;

@@ -16,8 +16,8 @@ static void error_fopen(const char *filename);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-uint8_t *load_file(const char *filename) {
-
+uint8_t *load_file(const char *filename)
+{
 	uint8_t *code;
 
 	{
@@ -38,8 +38,8 @@ uint8_t *load_file(const char *filename) {
 	return code;
 }
 
-uint8_t *load_stdin(void) {
-
+uint8_t *load_stdin(void)
+{
 	uint8_t *code;
 
 	{
@@ -62,8 +62,8 @@ uint8_t *load_stdin(void) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static uint8_t *_load_stdin(FILE *stream) {
-
+static uint8_t *_load_stdin(FILE *stream)
+{
 	uint8_t *code;
 
 	read_stdin(stream);
@@ -76,8 +76,8 @@ static uint8_t *_load_stdin(FILE *stream) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static uint8_t *read_file(FILE *stream) {
-
+static uint8_t *read_file(FILE *stream)
+{
 	uint8_t *code;
 
 	code = NULL;
@@ -97,8 +97,8 @@ static uint8_t *read_file(FILE *stream) {
 	return code;
 }
 
-static void read_stdin(FILE *stream) {
-
+static void read_stdin(FILE *stream)
+{
 	int chr;
 
 	while ((chr = getchar()) != EOF) {
@@ -109,8 +109,8 @@ static void read_stdin(FILE *stream) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void error_fopen(const char *filename) {
-
+static void error_fopen(const char *filename)
+{
 	perror(filename);
 
 	exit(1);
