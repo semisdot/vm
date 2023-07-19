@@ -18,6 +18,8 @@ void init_stack(struct stack *s, size_t size)
 
 void free_stack(struct stack *s)
 {
+	// s->size = 0;
+
 	free(s->o);
 	s->o = NULL;
 }

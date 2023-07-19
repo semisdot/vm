@@ -14,28 +14,19 @@
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void handle_command_line(int argc, char **argv);
 static void error_usage(const char *err_msg);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+// a little global won't hurt, right? right?! (silence)
+static uint8_t *code;
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 int main(int argc, char **argv)
 {
-	uint8_t *code;
-
-	{ // handle command line
-		if (argc == 1) {
-
-			code = load_stdin();
-
-		} else if (argc == 2) {
-
-			code = load_file(argv[1]);
-
-		} else {
-
-			error_usage("vm usage");
-		}
-	}
+	handle_command_line(argc, argv);
 
 	{
 		struct stack s;
@@ -60,6 +51,22 @@ int main(int argc, char **argv)
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+static void handle_command_line(int argc, char **argv)
+{
+	if (argc == 1) {
+
+		code = load_stdin();
+
+	} else if (argc == 2) {
+
+		code = load_file(argv[1]);
+
+	} else {
+
+		error_usage("vm usage");
+	}
+}
 
 static void error_usage(const char *err_msg)
 {
