@@ -124,5 +124,5 @@ static void put_ASCII_code(uint8_t u8) // _op_emit_ASCII_code() ?!
 		u8 = u8 % 10; // == last digit // u8 = u8 - (u8 / 10) * 10
 	}
 
-	putchar(u8 + 48 /* offset */); // (u8 + '0')
+	putchar(u8 + 48 /* offset */); // (u8 + '0') // e.g., 4 + 48 == '4' (in char world)
 }

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#include "h.h"
 #include "vm.h"
 #include "load.h"
 #include "init.h"
@@ -14,6 +15,8 @@
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void handle_command_line(int argc, char **argv);
+
 static uint8_t *load_code(int argc, char **argv);
 static void error_usage(const char *err_msg);
 
@@ -24,6 +27,8 @@ int main(int argc, char **argv)
 	uint8_t *code;
 	struct stack s;
 	uint8_t *(*ops[MAX_OPS])(uint8_t *, struct stack *); // array of function pointers
+
+	handle_command_line(argc, argv);
 
 	code = load_code(argc, argv);
 
@@ -46,9 +51,21 @@ int main(int argc, char **argv)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void handle_command_line(int argc, char **argv)
+{
+	UNUSED_PARAMETER(argv);
+
+	if (argc > 2) {
+
+		error_usage("vm usage");
+	}
+}
+
 static uint8_t *load_code(int argc, char **argv)
 {
 	uint8_t *code;
+
+	// code = NULL;
 
 	if (argc == 1) {
 
@@ -57,10 +74,6 @@ static uint8_t *load_code(int argc, char **argv)
 	} else if (argc == 2) {
 
 		code = load_file(argv[1]);
-
-	} else {
-
-		error_usage("vm usage");
 	}
 
 	return code;
