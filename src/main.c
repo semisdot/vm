@@ -14,46 +14,42 @@
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void handle_command_line(int argc, char **argv);
+static uint8_t *load_code(int argc, char **argv);
 static void error_usage(const char *err_msg);
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-// a little global won't hurt, right? right?! (silence)
-static uint8_t *code;
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 int main(int argc, char **argv)
 {
-	handle_command_line(argc, argv);
+	uint8_t *code;
+	struct stack s;
+	uint8_t *(*ops[MAX_OPS])(uint8_t *, struct stack *); // array of function pointers
 
-	{
-		struct stack s;
-		uint8_t *(*ops[MAX_OPS])(uint8_t *, struct stack *); // array of function pointers
+	code = load_code(argc, argv);
 
-		init_stack(&s, STACK_SIZE);
+	init_stack(&s, STACK_SIZE);
 
-		set_ops(ops, MAX_OPS, op_nop);
-		init_ops(ops);
+	set_ops(ops, MAX_OPS, op_nop);
+	init_ops(ops);
 
-		vm_run(code, &s, ops);
+	vm_run(code, &s, ops);
 
-		// free_stack(&s);
-	}
+#if 0
+	free_stack(&s);
 
-	/*
 	free(code);
 	code = NULL;
-	*/
+#endif
 
 	return 0;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void handle_command_line(int argc, char **argv)
+static uint8_t *load_code(int argc, char **argv)
 {
+	uint8_t *code;
+
 	if (argc == 1) {
 
 		code = load_stdin();
@@ -66,6 +62,8 @@ static void handle_command_line(int argc, char **argv)
 
 		error_usage("vm usage");
 	}
+
+	return code;
 }
 
 static void error_usage(const char *err_msg)
