@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 {
 	uint8_t *code;
 	struct stack s;
-	uint8_t *(*ops[MAX_OPS])(uint8_t *, struct stack *); // array of function pointers
+	uint8_t *(*ops[MAX_OPS])(uint8_t *, struct stack *); // array of function pointers, DON'T PANIC!
 
 	code = load_code(argc, argv);
 
